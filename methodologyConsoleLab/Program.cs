@@ -35,7 +35,7 @@ class MainGame
     {
         for (int i = 0; i < 3; i++)
         {
-            GamePlay(GeometricProgressionGame.SelectAnswer());
+            if (!GamePlay(GeometricProgressionGame.SelectAnswer())) break;
         }
         Console.WriteLine("Нажмите любую клавишу, чтобы выйти...");
         Console.ReadKey();
