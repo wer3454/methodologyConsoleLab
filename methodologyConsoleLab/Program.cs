@@ -71,12 +71,12 @@ class GeometricProgressionGame
 {
     public static void Play()
     {
-        Random random = new Random();
+        Random random = new();
         int length = random.Next(5, 11);
         int start = random.Next(1, 10);
         int ratio = random.Next(2, 5);
 
-        List<int> progression = new List<int>();
+        List<int> progression = [];
         for (int i = 0; i < length; i++)
             progression.Add(start * (int)Math.Pow(ratio, i));
 
