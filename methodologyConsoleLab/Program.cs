@@ -1,7 +1,6 @@
-﻿Console.WriteLine("Hello, World!");
-GameLCM a = new();
+﻿GameLCM a = new();
 a.Play();
-
+GeometricProgressionGame.Play();
 class GameLCM
 {
     public readonly int length;
@@ -91,7 +90,7 @@ class GeometricProgressionGame
         {
             Console.Write("Введите скрытое число: ");
             if (int.TryParse(Console.ReadLine(), out userAnswer))
-                break;
+            break;
             Console.WriteLine("Ошибка: Введите числовое значение.");
         }
 
