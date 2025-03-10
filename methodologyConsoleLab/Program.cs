@@ -1,8 +1,70 @@
-﻿GameLCM a = new();
-a.Play();
-GeometricProgressionGame.Play();
-Console.WriteLine("Нажмите любую клавишу, чтобы выйти...");
-Console.ReadKey();
+﻿MainGame.SelectGame();
+class MainGame
+{
+    public static bool GamePlay(long correctAnswer)
+    {
+        long userAnswer;
+        while (true)
+        {
+            Console.Write("Ваш ответ: ");
+            if (long.TryParse(Console.ReadLine(), out userAnswer)) break;
+            Console.WriteLine("Ошибка: Введите числовое значение.");
+        }
+        if (userAnswer == correctAnswer)
+        {
+            Console.WriteLine("Верно!");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine($"Неверно. Правильный ответ: {correctAnswer}");
+            return false;
+        }
+    }
+    public static void RepeatLCM()
+    {
+        GameLCM a = new();
+        for (int i = 0; i < 3; i++)
+        {
+            if (!GamePlay(a.SelectAnswer())) break;
+        }
+        Console.WriteLine("Нажмите любую клавишу, чтобы выйти...");
+        Console.ReadKey();
+    }
+    public static void RepeatProgression()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            GamePlay(GeometricProgressionGame.SelectAnswer());
+        }
+        Console.WriteLine("Нажмите любую клавишу, чтобы выйти...");
+        Console.ReadKey();
+    }
+    public static void SelectGame()
+    {
+        Console.WriteLine("1. НОК");
+        Console.WriteLine("2. Геометрическая прогрессия");
+        int userAnswer;
+        while (true)
+        {
+            Console.Write("Ваш выбор: ");
+            if (int.TryParse(Console.ReadLine(), out userAnswer)) break;
+        }
+        Console.Clear();
+        switch (userAnswer)
+        {
+            case 1: 
+                RepeatLCM();
+                break;
+            case 2: 
+                RepeatProgression();
+                break;
+            default:
+                SelectGame();
+                break;
+        }
+    }
+}
 class GameLCM
 {
     public readonly int length;
@@ -20,22 +82,12 @@ class GameLCM
         min = 1;
         max = 10;
     }
-    public void Play()
+    public long SelectAnswer()
     {
         List<int> numbers = Makelist();
         Console.WriteLine("Найдите НОК чисел: " + string.Join(" ", numbers));
-        long userAnswer;
         long correctLcm = FindLCM(numbers);
-        while (true)
-        {
-            Console.Write("Ваш ответ: ");
-            if (long.TryParse(Console.ReadLine(), out userAnswer)) break;
-            Console.WriteLine("Ошибка: Введите числовое значение.");
-        }
-        if (userAnswer == correctLcm)
-            Console.WriteLine("Верно!");
-        else
-            Console.WriteLine($"Неверно. Правильный ответ: {correctLcm}");
+        return correctLcm;
     }
     private List<int> Makelist()
     {
@@ -70,7 +122,7 @@ class GameLCM
 }
 class GeometricProgressionGame
 {
-    public static void Play()
+    public static List<int> MakeProgression()
     {
         Random random = new();
         int length = random.Next(5, 11);
@@ -80,25 +132,16 @@ class GeometricProgressionGame
         List<int> progression = [];
         for (int i = 0; i < length; i++)
             progression.Add(start * (int)Math.Pow(ratio, i));
-
-        int hiddenIndex = random.Next(0, length);
+        return progression;
+    }
+    public static int SelectAnswer()
+    {
+        Random random = new();
+        List<int> progression = MakeProgression();
+        int hiddenIndex = random.Next(0, progression.Count);
         int correctAnswer = progression[hiddenIndex];
         progression[hiddenIndex] = -1;
-
         Console.WriteLine("Геометрическая прогрессия: " + string.Join(" ", progression.Select(n => n == -1 ? ".." : n.ToString())));
-
-        int userAnswer;
-        while (true)
-        {
-            Console.Write("Введите скрытое число: ");
-            if (int.TryParse(Console.ReadLine(), out userAnswer))
-            break;
-            Console.WriteLine("Ошибка: Введите числовое значение.");
-        }
-
-        if (userAnswer == correctAnswer)
-            Console.WriteLine("Верно!");
-        else
-            Console.WriteLine($"Неверно. Правильный ответ: {correctAnswer}");
+        return correctAnswer;
     }
 }
