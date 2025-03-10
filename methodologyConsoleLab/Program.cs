@@ -1,6 +1,8 @@
 ﻿GameLCM a = new();
 a.Play();
 GeometricProgressionGame.Play();
+Console.WriteLine("Нажмите любую клавишу, чтобы выйти...");
+Console.ReadKey();
 class GameLCM
 {
     public readonly int length;
